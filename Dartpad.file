@@ -1,0 +1,40 @@
+String evaluateStudentGrades(List<dynamic> rawGrades) {
+  int validCount = 0;
+  double totalScore = 0.0;
+
+  for (var entry in rawGrades) {
+   
+    final grade = double.tryParse(entry.toString());
+
+   
+    if (grade == null || grade < 0 || grade > 100) {
+      print("Error processing input '$entry': Invalid grade format or out-of-bounds score.");
+      continue;
+    }
+
+   
+    if (grade >= 75) {
+      print("Grade ${grade.toStringAsFixed(1)}: Passed");
+    } else {
+      print("Grade ${grade.toStringAsFixed(1)}: Failed");
+    }
+
+    totalScore += grade;
+    validCount++;
+  }
+
+  if (validCount == 0) return "No valid grades processed.";
+
+  double average = totalScore / validCount;
+  return "Processed $validCount valid grades. Class Average: ${average.toStringAsFixed(2)}";
+}
+
+void main() {
+  List<dynamic> testInputs = [85, 60.5, "invalid_score", 92, -10, 105];
+
+  print("--- Processing Grades ---");
+  String summary = evaluateStudentGrades(testInputs);
+
+  print("\n--- Summary ---");
+  print(summary);
+}
